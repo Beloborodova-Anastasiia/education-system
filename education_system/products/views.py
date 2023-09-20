@@ -1,11 +1,14 @@
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+
 from .models import Lesson, Product, UserLesson, UserProduct
 from .serializers import (LessonSerializer, ProductSerializer,
-                          UserProductSerializer)
+                          )
 
 User = get_user_model()
 
@@ -19,24 +22,26 @@ def lessons(request):
 
 
 @api_view(['GET'])
-def products(request):
+def products(request, name):
     user = request.user
-    user_products = UserProduct.objects.filter(user=user)
-    print(user_products)
-    products = Product.objects.filter(
-        id__in=user_products.values_list('product',)
-    ).all()
-    print(products)
-    # return User.objects.all()
-    # user = User.objects.filter(id=1).first()
-    # products = products.user
-    # ingredient_recipe = user.userproduct_set.filter(
-
-    #         ).first()
-    # products = Product.objects.all()
-    # print(products)
-    serializer = ProductSerializer(products, many=True)
-    return Response(serializer.data)
+    product = get_object_or_404(Product, name=name)
+    if UserProduct.objects.filter(product=product, user=user).exists():
+        lessons = product.lessons.all()
+        # user_products = UserProduct.objects.filter(user=user)
+        # products = Product.objects.filter(
+        #     id__in=user_products.values_list('product',)
+        # ).all()
+        # lessons = Lesson.objects.filter(
+        #     id__in=products.values_list('lessons',)
+        # )
+    # serializer = ProductSerializer(product, context={'request': request})
+        serializer = LessonSerializer(lessons, many=True, context={'request': request})
+        return Response(serializer.data)
+    else:
+        return Response(
+            'У вас нет доступа к этому продукту',
+            status=status.HTTP_403_FORBIDDEN
+        )
 
 
 @api_view(['GET'])

@@ -19,7 +19,7 @@ from .views import lessons, products
 
 urlpatterns = [
     # path('', include(router.urls)),
-    path('lessons/', lessons),
-    path('products/', products)
-
+    path('lessons/', lessons, name='lessons_list'),
+    # path('products/', products)
+    path('<str:name>/', products, name='product'),
 ]

@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -124,11 +126,11 @@ class UserLesson(models.Model):
         max_length=15,
         verbose_name=' Статус',
     )
-    time = models.IntegerField(
+    viewing_duration = models.IntegerField(
         verbose_name='Время просмотра',
         blank=True
     )
-    date = models.DateField(
+    date_viewing = models.DateField(
         verbose_name='Дата просмотра',
         blank=True
     )
@@ -142,3 +144,11 @@ class UserLesson(models.Model):
         ]
         verbose_name_plural = 'Уроки пользователя'
         verbose_name = 'Уроки'
+
+    def save(self, *args, **kwargs):
+        if self.time / self.lesson.duration >= 0.8:
+            self.status = 'Просмотрено'
+        else:
+            self.status = 'Не просмотрено'
+        self.date_viewing = str(datetime.date.today())
+        super(UserLesson, self).save(*args, **kwargs)
