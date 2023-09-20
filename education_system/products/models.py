@@ -13,6 +13,12 @@ class Lesson(models.Model):
     link = models.URLField(
         unique=True,
         verbose_name='Ссылка на урок',
+        blank=True,
+        null=True
+    )
+    duration = models.IntegerField(
+        verbose_name='Длительность урока ',
+        default=0
     )
 
     class Meta:
@@ -24,6 +30,11 @@ class Lesson(models.Model):
 
 
 class Product(models.Model):
+    name = models.TextField(
+        max_length=256,
+        db_index=True,
+        verbose_name='Название',
+    )
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -113,7 +124,7 @@ class UserLesson(models.Model):
         max_length=15,
         verbose_name=' Статус',
     )
-    time = models.TimeField(
+    time = models.IntegerField(
         verbose_name='Время просмотра',
         blank=True
     )
@@ -131,4 +142,3 @@ class UserLesson(models.Model):
         ]
         verbose_name_plural = 'Уроки пользователя'
         verbose_name = 'Уроки'
-
