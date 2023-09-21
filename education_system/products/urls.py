@@ -1,27 +1,13 @@
-from django.urls import include, path
-from rest_framework import routers
+from django.urls import path
 
-# from .views import LessonViewSet, ProductViewSet
-from .views import lessons, products, statistics, ProductViewSet
-
-app_name = 'products'
-router = routers.DefaultRouter()
-# router.register(
-#     'lessons',
-#     LessonViewSet,
-#     basename='lessons'
-# )
-router.register(
-    r'products',
-    # 'products',
-    ProductViewSet,
-    basename='product'
-)
+from .views import lessons, lessons_in_product, statistics
 
 urlpatterns = [
-    path('', include(router.urls)),
-    # path('lessons/', lessons, name='lessons_list'),
-    # path('products/', products)
-    # path('product/<str:name>/', products, name='product'),
+    path('lessons/', lessons, name='lessons_list'),
+    path(
+        'lessons_in_product/<str:id>/',
+        lessons_in_product,
+        name='lessons_in_product'
+    ),
     path('statistics/', statistics, name='statistics')
 ]
