@@ -115,9 +115,7 @@ class UserProduct(models.Model):
     def save(self, *args, **kwargs):
         if self.pk is None:
             lessons = self.product.lessons.all()
-            print(lessons)
             for lesson in lessons:
-                print(lesson)
                 UserLesson.objects.get_or_create(user=self.user, lesson=lesson)
         super().save(*args, **kwargs)
 
@@ -161,12 +159,12 @@ class UserLesson(models.Model):
 
     def save(self, *args, **kwargs):
         if (
-            self.viewing_duration / self.lesson.duration
+            self.view_duration / self.lesson.duration
             >= PASSING_THRESHOLD
         ):
             self.status = STATUS_VIEWED
         else:
             self.status = STATUS_NOT_VIEWD
-        if self.viewing_duration > 0:
-            self.date_viewing = str(datetime.date.today())
+        if self.view_duration > 0:
+            self.view_date = str(datetime.date.today())
         super(UserLesson, self).save(*args, **kwargs)
