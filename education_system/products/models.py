@@ -110,6 +110,15 @@ class UserProduct(models.Model):
         verbose_name_plural = 'Продукты пользователя'
         verbose_name = 'Продукты'
 
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            lessons = self.product.lessons.all()
+            print(lessons)
+            for lesson in lessons:
+                print(lesson)
+                UserLesson.objects.get_or_create(user=self.user, lesson=lesson)
+        super().save(*args, **kwargs)
+
 
 class UserLesson(models.Model):
     PERCENT_WHEN_VIEWED = 0.8
@@ -132,11 +141,12 @@ class UserLesson(models.Model):
     )
     viewing_duration = models.IntegerField(
         verbose_name='Время просмотра',
-        blank=True
+        default=0
     )
     date_viewing = models.DateField(
         verbose_name='Дата просмотра',
-        blank=True
+        blank=True,
+        null=True
     )
 
     class Meta:
@@ -150,9 +160,13 @@ class UserLesson(models.Model):
         verbose_name = 'Уроки'
 
     def save(self, *args, **kwargs):
-        if self.time / self.lesson.duration >= self.PERCENT_WHEN_VIEWED:
+        if (
+            self.viewing_duration / self.lesson.duration
+            >= self.PERCENT_WHEN_VIEWED
+        ):
             self.status = 'Просмотрено'
         else:
             self.status = 'Не просмотрено'
-        self.date_viewing = str(datetime.date.today())
+        if self.viewing_duration > 0:
+            self.date_viewing = str(datetime.date.today())
         super(UserLesson, self).save(*args, **kwargs)

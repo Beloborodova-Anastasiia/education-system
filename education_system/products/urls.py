@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import lessons, lessons_in_product, statistics
+from .views import lessons, lessons_in_product, statistics, purchase
 
 urlpatterns = [
     path('lessons/', lessons, name='lessons_list'),
@@ -9,5 +9,6 @@ urlpatterns = [
         lessons_in_product,
         name='lessons_in_product'
     ),
-    path('statistics/', statistics, name='statistics')
+    path('statistics/', statistics, name='statistics'),
+    path('purchase/<str:id>/', purchase, name='purchase'),
 ]

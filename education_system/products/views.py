@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Lesson, Product, UserProduct, UserLesson
@@ -12,6 +12,7 @@ User = get_user_model()
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def lessons_in_product(request, id):
     user = request.user
     product = get_object_or_404(Product, id=id)
@@ -31,6 +32,7 @@ def lessons_in_product(request, id):
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def lessons(request):
     user = request.user
     user_lessons = UserLesson.objects.filter(
@@ -57,3 +59,12 @@ def statistics(request):
         context={'request': request}
     )
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def purchase(request, id):
+    product = get_object_or_404(Product, id=id)
+    user = request.user
+    UserProduct.objects.create(user=user, product=product)
+    return Response()
