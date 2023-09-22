@@ -166,5 +166,5 @@ class UserLesson(models.Model):
         else:
             self.status = STATUS_NOT_VIEWD
         if self.view_duration > 0:
-            self.view_date = str(datetime.date.today())
+            self.view_date = datetime.date.today()
         super(UserLesson, self).save(*args, **kwargs)
