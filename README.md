@@ -50,7 +50,7 @@ pip install -r requirements.txt
 Выполнить миграции:
 
 ```
-cd education-system/
+cd education_system/
 
 ```
 ```
