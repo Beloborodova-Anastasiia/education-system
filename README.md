@@ -5,12 +5,14 @@
 ### Технологии
 
 Python 3.78
+
 Django 4.2
+
 Django REST framework 3.14.0
 
 ### Локальный запуск проекта
 
-Клонировать репозиториий и перейти в папку проекта в команддной строке:
+Клонировать репозиториий и перейти в папку проекта в командной строке:
 ```
 git clone https://github.com/Beloborodova-Anastasiia/education-system.git
 ```
@@ -79,7 +81,6 @@ python3 manage.py loaddata db_data.json
 ```
 
 для Windows:
-```
 ```
 python manage.py loaddata db_data.json
 ```
