@@ -3,7 +3,7 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from .const import PASSING_THRESHOLD, STATUS_NOT_VIEWD, STATUS_VIEWED
+from .const import PASSING_THRESHOLD
 
 User = get_user_model()
 
