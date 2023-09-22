@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from django.db.models import Sum
 from rest_framework import serializers
 
-from .const import (PATH_TO_LESSONS, STATUS_VIEWED, STATUS_VIEWED_BOOL,
-                    STATUS_NOT_VIEWD)
+from .const import (PATH_TO_LESSONS, STATUS_NOT_VIEWD, STATUS_VIEWED,
+                    STATUS_VIEWED_BOOL)
 from .models import Lesson, Product, UserLesson, UserProduct
 
 User = get_user_model()
