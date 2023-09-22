@@ -21,25 +21,30 @@ cd education-system/
 
 Создать и активировать виртуальное окружение:
 
-```
+
 для Mac и Linux:
-python3 -m venv env
+```
+python3 -m venv venv
+```
+```
 source venv/bin/activate
 ```
-```
+
 для Windows:
+```
 python -m venv venv
+```
 source venv/Scripts/activate 
 ```
 
 Установить зависимости из файла requirements.txt:
 
-```
 для Mac и Linux:
+```
 python3 -m pip install --upgrade pip
 ```
-```
 для Windows:
+```
 python -m pip install --upgrade pip
 ```
 
@@ -53,12 +58,14 @@ pip install -r requirements.txt
 cd education_system/
 
 ```
-```
+
 для Mac и Linux:
+```
 python3 manage.py migrate
 ```
-```
+
 для Windows:
+```
 python manage.py migrate
 ```
 
@@ -69,12 +76,14 @@ python manage.py loaddata db_data.json
 
 Запустить проект:
 
-```
+
 для Mac и Linux:
+```
 python3 manage.py runserver
 ```
-```
+
 для Windows:
+```
 python manage.py runserver
 ```
 Проект запустится локально по адресу:
@@ -87,12 +96,14 @@ http://127.0.0.1:8000/
 ### Тестирование
 
 Запуск тестов:
-```
+
 для Mac и Linux:
+```
 python3 manage.py test
 ```
-```
+
 для Windows:
+```
 python manage.py test
 ```
 
