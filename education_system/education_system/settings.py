@@ -3,7 +3,6 @@ from pathlib import Path
 
 import django
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-c#ty1l=7gx1e@yn*e*(g_yrbu8(v^+(2p7_xjln#)!y7&%1aun'

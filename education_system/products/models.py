@@ -133,8 +133,11 @@ class UserLesson(models.Model):
         related_name='lesson_user',
         verbose_name='Урок',
     )
-    status = models.TextField(
-        max_length=15,
+    # status = models.TextField(
+    #     max_length=15,
+    #     verbose_name=' Статус',
+    # )
+    status = models.BooleanField(
         verbose_name=' Статус',
     )
     view_duration = models.IntegerField(
@@ -162,9 +165,9 @@ class UserLesson(models.Model):
             self.view_duration / self.lesson.duration
             >= PASSING_THRESHOLD
         ):
-            self.status = STATUS_VIEWED
+            self.status = 1
         else:
-            self.status = STATUS_NOT_VIEWD
+            self.status = 0
         if self.view_duration > 0:
             self.view_date = datetime.date.today()
         super(UserLesson, self).save(*args, **kwargs)

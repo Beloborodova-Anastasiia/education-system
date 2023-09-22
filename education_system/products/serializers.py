@@ -2,7 +2,8 @@ from django.contrib.auth import get_user_model
 from django.db.models import Sum
 from rest_framework import serializers
 
-from .const import PATH_TO_LESSONS, STATUS_VIEWED
+from .const import (PATH_TO_LESSONS, STATUS_VIEWED, STATUS_VIEWED_BOOL,
+                    STATUS_NOT_VIEWD)
 from .models import Lesson, Product, UserLesson, UserProduct
 
 User = get_user_model()
@@ -29,7 +30,9 @@ class LessonSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         user_lesson = UserLesson.objects.filter(lesson=obj, user=user)
         if user_lesson.exists():
-            return user_lesson.first().status
+            if user_lesson.first().status:
+                return STATUS_VIEWED
+            return STATUS_NOT_VIEWD
         return None
 
     def get_view_duration(self, obj):
@@ -71,7 +74,7 @@ class StatisticsSerializer(serializers.ModelSerializer):
         )
 
     def get_lessons_viewed(self, obj):
-        users_lessons = UserLesson.objects.filter(status=STATUS_VIEWED)
+        users_lessons = UserLesson.objects.filter(status=STATUS_VIEWED_BOOL)
         return obj.lessons.filter(
             id__in=users_lessons.values_list('lesson',)
         ).all().count()

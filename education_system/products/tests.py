@@ -161,7 +161,7 @@ class ExampleTestCase(APITestCase):
         self.assertEqual(content['name'], self.lesson_first.name)
         self.assertEqual(content['link'], self.lesson_first.link)
         self.assertEqual(content['duration'], self.lesson_first.duration)
-        self.assertEqual(content['status'], self.user_lesson.status)
+        self.assertEqual(content['status'], self.lessons_data['status'])
         self.assertEqual(
             content['view_duration'],
             self.user_lesson.view_duration
@@ -178,7 +178,7 @@ class ExampleTestCase(APITestCase):
         self.assertEqual(content['name'], self.lesson_first.name)
         self.assertEqual(content['link'], self.lesson_first.link)
         self.assertEqual(content['duration'], self.lesson_first.duration)
-        self.assertEqual(content['status'], self.user_lesson.status)
+        self.assertEqual(content['status'], self.lessons_data['status'])
         self.assertEqual(
             content['view_duration'],
             self.user_lesson.view_duration

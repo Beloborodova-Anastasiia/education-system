@@ -1,4 +1,5 @@
 PATH_TO_LESSONS = '/api/lessons/'
 PASSING_THRESHOLD = 0.8
 STATUS_VIEWED = 'Просмотрено'
+STATUS_VIEWED_BOOL = 1
 STATUS_NOT_VIEWD = 'Не просмотрено'
