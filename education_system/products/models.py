@@ -40,7 +40,7 @@ class Product(models.Model):
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='recipes',
+        related_name='owner',
         verbose_name='Владелец',
     )
     lessons = models.ManyToManyField(
@@ -66,6 +66,7 @@ class LessonProduct(models.Model):
     lesson = models.ForeignKey(
         Lesson,
         on_delete=models.CASCADE,
+        related_name='lesson_product',
         verbose_name='Урок',
     )
     product = models.ForeignKey(
@@ -111,6 +112,8 @@ class UserProduct(models.Model):
 
 
 class UserLesson(models.Model):
+    PERCENT_WHEN_VIEWED = 0.8
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -120,6 +123,7 @@ class UserLesson(models.Model):
     lesson = models.ForeignKey(
         Lesson,
         on_delete=models.CASCADE,
+        related_name='lesson_user',
         verbose_name='Урок',
     )
     status = models.TextField(
@@ -146,7 +150,7 @@ class UserLesson(models.Model):
         verbose_name = 'Уроки'
 
     def save(self, *args, **kwargs):
-        if self.time / self.lesson.duration >= 0.8:
+        if self.time / self.lesson.duration >= self.PERCENT_WHEN_VIEWED:
             self.status = 'Просмотрено'
         else:
             self.status = 'Не просмотрено'

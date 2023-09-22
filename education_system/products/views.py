@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .models import Lesson, Product, UserProduct
+from .models import Lesson, Product, UserProduct, UserLesson
 from .serializers import LessonSerializer, StatisticsSerializer
 
 User = get_user_model()
@@ -33,12 +33,11 @@ def lessons_in_product(request, id):
 @api_view(['GET'])
 def lessons(request):
     user = request.user
-    user_products = UserProduct.objects.filter(user=user)
-    products = Product.objects.filter(
-        id__in=user_products.values_list('product',)
-    ).all()
+    user_lessons = UserLesson.objects.filter(
+        user=user
+    ).select_related('lesson')
     lessons = Lesson.objects.filter(
-        id__in=products.values_list('lessons',)
+        id__in=user_lessons.values_list('lesson',)
     )
     serializer = LessonSerializer(
         lessons,

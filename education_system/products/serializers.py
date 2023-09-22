@@ -78,7 +78,7 @@ class StatisticsSerializer(serializers.ModelSerializer):
     def get_view_time(self, obj):
         lessons = obj.lessons.all()
         return UserLesson.objects.filter(
-            id__in=lessons.values_list('userlesson',)
+            id__in=lessons.values_list('lesson_user',)
         ).aggregate(Sum('viewing_duration'))['viewing_duration__sum']
 
     def get_users_count(self, obj):
