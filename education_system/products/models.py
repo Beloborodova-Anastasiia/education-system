@@ -3,6 +3,8 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from .const import PASSING_THRESHOLD, STATUS_NOT_VIEWD, STATUS_VIEWED
+
 User = get_user_model()
 
 
@@ -46,9 +48,9 @@ class Product(models.Model):
     lessons = models.ManyToManyField(
         Lesson,
         through='LessonProduct',
-        verbose_name='Продукты',
+        verbose_name='Уроки',
     )
-    user = models.ManyToManyField(
+    users = models.ManyToManyField(
         User,
         through='UserProduct',
         verbose_name='Пользователи',
@@ -121,8 +123,6 @@ class UserProduct(models.Model):
 
 
 class UserLesson(models.Model):
-    PERCENT_WHEN_VIEWED = 0.8
-
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -139,11 +139,11 @@ class UserLesson(models.Model):
         max_length=15,
         verbose_name=' Статус',
     )
-    viewing_duration = models.IntegerField(
+    view_duration = models.IntegerField(
         verbose_name='Время просмотра',
         default=0
     )
-    date_viewing = models.DateField(
+    view_date = models.DateField(
         verbose_name='Дата просмотра',
         blank=True,
         null=True
@@ -162,11 +162,11 @@ class UserLesson(models.Model):
     def save(self, *args, **kwargs):
         if (
             self.viewing_duration / self.lesson.duration
-            >= self.PERCENT_WHEN_VIEWED
+            >= PASSING_THRESHOLD
         ):
-            self.status = 'Просмотрено'
+            self.status = STATUS_VIEWED
         else:
-            self.status = 'Не просмотрено'
+            self.status = STATUS_NOT_VIEWD
         if self.viewing_duration > 0:
             self.date_viewing = str(datetime.date.today())
         super(UserLesson, self).save(*args, **kwargs)
