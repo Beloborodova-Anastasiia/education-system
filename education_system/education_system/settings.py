@@ -1,13 +1,16 @@
 from datetime import timedelta
 from pathlib import Path
 
+import django
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-c#ty1l=7gx1e@yn*e*(g_yrbu8(v^+(2p7_xjln#)!y7&%1aun'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['testserver', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -19,7 +22,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'django_filters',
-    'products.apps.ProductsConfig'
+    'products.apps.ProductsConfig',
 ]
 
 MIDDLEWARE = [
@@ -103,3 +106,5 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django.setup()

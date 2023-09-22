@@ -1,8 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.db.models import Sum
 from rest_framework import serializers
 
 from .const import PATH_TO_LESSONS, STATUS_VIEWED
-from .models import Lesson, Product, User, UserLesson, UserProduct
+from .models import Lesson, Product, UserLesson, UserProduct
+
+User = get_user_model()
 
 
 class LessonSerializer(serializers.ModelSerializer):

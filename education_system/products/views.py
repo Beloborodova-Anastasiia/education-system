@@ -70,24 +70,24 @@ def purchase(request, id):
     return Response()
 
 
-from rest_framework import filters, permissions, viewsets
-from django_filters.rest_framework import DjangoFilterBackend
+# from rest_framework import filters, permissions, viewsets
+# from django_filters.rest_framework import DjangoFilterBackend
 
-from .filters import LessonFilter
+# from .filters import LessonFilter
 
-class LessonsViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    serializer_class = LessonSerializer
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
-    filterset_class = LessonFilter
-    pagination_class = None
+# class LessonsViewSet(viewsets.ModelViewSet):
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = LessonSerializer
+#     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+#     filterset_class = LessonFilter
+#     pagination_class = None
 
-    def get_queryset(self):
-        user = self.request.user
-        user_lessons = UserLesson.objects.filter(
-            user=user
-        ).select_related('lesson')
-        lessons = Lesson.objects.filter(
-            id__in=user_lessons.values_list('lesson',)
-        )
-        return lessons
+#     def get_queryset(self):
+#         user = self.request.user
+#         user_lessons = UserLesson.objects.filter(
+#             user=user
+#         ).select_related('lesson')
+#         lessons = Lesson.objects.filter(
+#             id__in=user_lessons.values_list('lesson',)
+#         )
+#         return lessons
