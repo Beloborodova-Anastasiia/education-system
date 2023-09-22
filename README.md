@@ -38,7 +38,7 @@ python -m venv venv
 source venv/Scripts/activate 
 ```
 
-Установить зависимости из файла requirements.txt:
+Обновить менеджер пакетов pip:
 
 для Mac и Linux:
 ```
@@ -49,6 +49,7 @@ python3 -m pip install --upgrade pip
 python -m pip install --upgrade pip
 ```
 
+Установить зависимости из файла requirements.txt:
 ```
 pip install -r requirements.txt
 ```
@@ -71,6 +72,14 @@ python manage.py migrate
 ```
 
 Перенести данные в базу данных:
+
+для Mac и Linux:
+```
+python3 manage.py loaddata db_data.json
+```
+
+для Windows:
+```
 ```
 python manage.py loaddata db_data.json
 ```
