@@ -160,5 +160,3 @@ GET: /api/statistics/
 ### Автор
 
 Анастасия Белобородова 
-
-anastasiia.beloborodova@gmail.com
